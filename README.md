@@ -11,7 +11,7 @@ Prerequisites
 -------------
  - Create a console account with [AWS](https://console.aws.amazon.com)
    - Your account will be provisioned with an AWS access key and secret.
-     ![Keep it secret - keep it safe.](https://media1.tenor.com/images/4a304ebf279020643d94d333c7708100/tenor.gif)
+     ![Keep it secret - keep it safe.](aws-secrets.gif)
  - Register a domain with [Route53](https://console.aws.amazon.com/route53)
    - Be sure to make note of the "Hosted Zone ID" once the domain is created - you'll need it later.
  -
