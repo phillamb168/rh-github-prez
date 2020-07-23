@@ -1,0 +1,11 @@
+.idea/
+
+.terraform/
+*.tfstate
+*.backup
+*.tar.gz
+.terragrunt-cache/
+
+tmp/
+Cheffile.lock
+cookbooks/
