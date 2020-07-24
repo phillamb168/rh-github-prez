@@ -1,5 +1,0 @@
-# This workflow ONLY RUNS when a new tag with the prefix `v` is created.
-#on:
-#  create:
-#    tags:
-#      - v*
