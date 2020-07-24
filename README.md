@@ -9,6 +9,8 @@ Documentation is available on each of the aforementioned repositories or website
 
 Prerequisites
 -------------
+ - Create a Github Bot account. I created one with the username 'phillamb168bot' and appended '+githubbot' to my current email address. Add this account as a collaborator under your repo's access management.
+ - Create a Github Bot Token FROM YOUR BOT ACCOUNT. See [Github Token Creation](https://github.com/rtCamp/action-phpcs-code-review#github-token-creation) for more information.
  - Create a console account with [AWS](https://console.aws.amazon.com)
    - Your account will be provisioned with an AWS access key and secret.
    - Create an [EC2 Keypair](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#KeyPairs:) as well.
@@ -60,3 +62,4 @@ AWS_PROFILE=myaccount terragrunt apply-all
 -------
  - Move domain-related configuration into environment-specific tfvars files.
  - Properly handle permissions for the deploy key.
+ - Modify Github Actions to look at release tags for versioning information.
