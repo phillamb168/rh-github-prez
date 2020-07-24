@@ -1,0 +1,125 @@
+{
+  "builders": [{
+    "name": "webserver",
+    "type": "amazon-ebs",
+    "region": "{{user `region`}}",
+    "instance_type": "m5.2xlarge",
+    "ami_name": "{{build_name}}-{{user `build_version`}}",
+    "ssh_username": "ec2-user",
+    "communicator": "ssh",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "amzn-ami-hvm-2018.03*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["amazon"],
+      "most_recent": true
+    }
+  }],
+  "variables": {
+    "ssh_disable_agent_forwarding": "false"
+  },
+  "provisioners": [
+    {
+      "type": "chef-solo",
+      "version": "13.12.14",
+      "cookbook_paths": ["cookbooks"],
+      "run_list": [
+        "lamp-stack-for-aws-cookbook"
+      ]
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/github_deploy_key",
+      "source": "./files/github_deploy_key"
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/php-7.2.ini",
+      "source": "./files/php-7.2.ini"
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/settings.php",
+      "source": "./files/settings.php"
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/set-composer-path.sh",
+      "source": "./files/set-composer-path.sh"
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/httpd.conf",
+      "source": "./files/httpd.conf"
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/fuse.conf",
+      "source": "./files/fuse.conf"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo cp /tmp/github_deploy_key /var/www/github_deploy_key",
+        "sudo chmod 777 /var/www/github_deploy_key",
+        "rm /tmp/github_deploy_key"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "DEBIAN_FRONTEND='noninteractive'",
+        "sudo yum install -y git curl unzip atlas-devel opencv",
+        "sudo yum remove -y epel-release-6-8.9.amzn1.noarch",
+        "sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+        "sudo yum install -y gcc unzip wget",
+        "sudo yum-config-manager --enable remi-php72",
+        "sudo yum install -y php72 mysql57-server php72-mysqlnd php72-pear php72-devel php72-gd php72-mbstring php72-xml php72-redis mod24_ssl php72-pdo php72-pdo_mysql php72-opcache",
+        "echo -------INSTALLED PHP PACKAGES"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mkdir /var/www/deploy",
+        "sudo chmod 777 /var/www/deploy",
+        "ssh-keyscan github.com >> ~/.ssh/known_hosts",
+        "eval `ssh-agent`",
+        "cd /var/www/deploy",
+        "sudo cp /tmp/httpd.conf /etc/httpd/conf",
+        "ssh-agent bash -c 'ssh-add /var/www/github_deploy_key; git clone --single-branch --branch master git@github.com:phillamb168/rh-github-prez.git'",
+        "sudo chmod 777 /var/www/deploy/rh-github-prez/code/web",
+        "sudo yum update -y all",
+        "sudo service httpd restart",
+        "sudo yum install -y s3fs-fuse",
+        "sudo cp /tmp/fuse.conf /etc/fuse.conf",
+        "cd /var/www/deploy/rh-github-prez/code/web/sites/default",
+        "sudo mkdir files",
+        "sudo chgrp ec2-user /var/www/deploy/rh-github-prez/code/web/sites/default/files",
+        "sudo chmod 775 /var/www/deploy/rh-github-prez/code/web/sites/default/files",
+        "sudo mkdir /mnt/web",
+        "sudo mkdir /mnt/web/private",
+        "sudo chgrp ec2-user /mnt/web/private",
+        "sudo chmod 775 /mnt/web/private"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "cd ~/",
+        "sudo curl -sS https://getcomposer.org/installer | sudo php",
+        "sudo mv composer.phar /usr/local/bin/composer",
+        "sudo ln -s /usr/local/bin/composer /usr/bin/composer",
+        "sh /tmp/set-composer-path.sh",
+        "cd /var/www/deploy/rh-github-prez/code",
+        "composer install",
+        "sudo cp /tmp/php-7.2.ini /etc",
+        "sudo cp /tmp/settings.php /var/www/deploy/rh-github-prez/code/web/sites/default",
+        "sudo chmod 775 /var/www/deploy/rh-github-prez/code/web/sites/default/settings.php",
+        "sudo service httpd restart"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+site "https://supermarket.getchef.com/api/v1"
+
+cookbook 'yum', '5.1.0'
+cookbook 'apache2', '3.2.2'
+cookbook 'php', '7.2.0'
+
+cookbook 'lamp-stack-for-aws-cookbook',
+  :git => 'https://github.com/cloudetc/lamp-stack-for-aws-cookbook.git',
+  :ref => 'develop'
