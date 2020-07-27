@@ -18,6 +18,7 @@ Prerequisites
  - Register a domain with [Route53](https://console.aws.amazon.com/route53)
    - Be sure to make note of the "Hosted Zone ID" once the domain is created - you'll need to add it as the zone_id in `terraform-modules/webserver/main.tf`, under the `resource "aws_route53_record" "validation"` resource.
  - Create an [S3 bucket](https://s3.console.aws.amazon.com/s3) with an easy-to-remember label. This will be where your TFState files are kept. Ensure that 'Block all public access' is checked, then, after creation of the bucket, go to the 'Permissions' tab and then 'Access Control List.' 'Access for Bucket Owner' should have 'Yes' listed across all four permissions groups.
+ - _Optional_: Create an additional [S3 bucket](https://s3.console.aws.amazon.com/s3) that will contain your *private* files. You will want to *check* 'Block _all_ public access.'
  - _Optional_: Create an additional [S3 bucket](https://s3.console.aws.amazon.com/s3) that will contain your publicly-served files. You will want to *uncheck* 'Block _all_ public access.'
  - Create a keypair with the name `github_deploy_key` and add it as a deploy key to your Github repo. *IMPORTANT*: Currently, this key is checked in to the devops repo. It is therefore _imperative_ that you *not* check 'Allow write access' on the Github Add Key form. Store the keypair in `/devops/files`.
  - Modify the Directory directives starting at around line 129 of `files/httpd.conf` to match your particular requirements.
