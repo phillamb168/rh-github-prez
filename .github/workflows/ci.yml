@@ -3,17 +3,9 @@
 on: pull_request
 name: Tests and code
 jobs:
-  phpcs:
-    name: PHPCS automated code review
+  phplint:
+    name: PHP Linter
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-    - name: Run PHPCS inspection
-      uses: rtCamp/action-phpcs-code-review@v2.0.2
-      env:
-        GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-        SKIP_FOLDERS: "tests,.github,devops"
-      with:
-        args: "PEAR"
+        - uses: actions/checkout@v1
+        - uses: michaelw90/PHP-Lint@master
