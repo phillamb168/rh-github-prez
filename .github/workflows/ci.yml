@@ -9,3 +9,9 @@ jobs:
     steps:
         - uses: actions/checkout@v1
         - uses: michaelw90/PHP-Lint@master
+    - name: Slack nofity
+      if: failure()
+      uses: thollander/actions-comment-pull-request@master
+      with:
+        message: 'Example of message !'
+        GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
