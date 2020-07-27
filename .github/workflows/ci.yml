@@ -15,3 +15,5 @@ jobs:
       env:
         GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
         SKIP_FOLDERS: "tests,.github,devops"
+      with:
+        args: "PEAR"
