@@ -16,7 +16,6 @@
 
   <!--Blacklist of coding standard rules that are not yet fixed. Ref. https://www.drupal.org/node/2571965-->
   <rule ref="Drupal">
-    <exclude name="Drupal.Array.Array"/>
     <exclude name="Drupal.Classes.ClassCreateInstance"/>
     <exclude name="Drupal.Classes.ClassDeclaration"/>
     <exclude name="Drupal.Classes.InterfaceName"/>
@@ -49,7 +48,6 @@
     <exclude name="Drupal.WhiteSpace.Comma"/>
     <exclude name="Drupal.WhiteSpace.EmptyLines"/>
     <exclude name="Drupal.WhiteSpace.OpenBracketSpacing"/>
-    <exclude name="Drupal.WhiteSpace.OperatorSpacing"/>
     <exclude name="Drupal.WhiteSpace.ScopeClosingBrace"/>
     <exclude name="Drupal.WhiteSpace.ScopeIndent"/>
     <exclude name="Generic.Formatting.SpaceAfterCast"/>

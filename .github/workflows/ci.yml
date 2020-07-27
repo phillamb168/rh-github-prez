@@ -14,4 +14,4 @@ jobs:
       uses: rtCamp/action-phpcs-code-review@v2.0.2
       env:
         GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-        SKIP_FOLDERS: "tests,.github"
+        SKIP_FOLDERS: "tests,.github,devops"
