@@ -4,8 +4,8 @@ on:
       - master
 name: Terragrunt GitHub Actions
 env:
-  tf_version: 'latest'
-  tg_version: 'latest'
+  tf_version: '0.11.14'
+  tg_version: '0.18.7'
   tf_working_dir: '.'
 jobs:
   terragrunt:
