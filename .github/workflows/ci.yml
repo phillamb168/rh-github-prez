@@ -1,6 +1,5 @@
 # This workflow fires whenever a PR is created, prior to approval.
 # The PR should not be approved if this workflow does not pass.
-workflow: CI
 on:
   pull_request:
     paths:

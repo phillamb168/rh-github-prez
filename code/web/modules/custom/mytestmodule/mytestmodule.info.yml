@@ -1,5 +1,5 @@
 name: Test Module
 type: module
 description: 'Does testing things.'
-package: MyCustomModule
+package: MyCustomModules
 core: 8.x
