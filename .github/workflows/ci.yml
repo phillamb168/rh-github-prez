@@ -1,6 +1,10 @@
 # This workflow fires whenever a PR is created, prior to approval.
 # The PR should not be approved if this workflow does not pass.
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - "code"
+      - "code/**"
 name: Tests and code
 jobs:
   phplint:
