@@ -1,5 +1,6 @@
 # This workflow fires whenever a PR is created, prior to approval.
 # The PR should not be approved if this workflow does not pass.
+workflow: CI
 on:
   pull_request:
     paths:
@@ -11,7 +12,7 @@ jobs:
     name: PHP Linter
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: michaelw90/PHP-Lint@master
     - name: Add comment on failure.
       if: failure()
@@ -19,3 +20,19 @@ jobs:
       with:
         message: 'Bleep bloop, I am a bot, PHP Linting failed!'
         GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan the webapplication
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.3.0
+        with:
+          token: ${{ secrets.GH_BOT_TOKEN }}
+          docker_name: 'owasp/zap2docker-stable'
+          target: 'https://www.zaproxy.org'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
