@@ -12,4 +12,4 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v2
       - name: 'Echo something'
-        run: echo terragrunt -v
+        run: terragrunt -v
