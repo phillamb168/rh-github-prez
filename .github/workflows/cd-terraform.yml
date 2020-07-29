@@ -9,7 +9,6 @@ defaults:
 name: Packer and Terragrunt Actions
 jobs:
   deploy:
-    needs: [packer]
     name: 'Packer and Terragrunt - Prod'
     runs-on: [self-hosted, terragrunt]
     steps:
