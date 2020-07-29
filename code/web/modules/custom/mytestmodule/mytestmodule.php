@@ -7,5 +7,5 @@ use Drupal\Core\Routing\RouteMatchInterface;
 function testfunc() {
  //one space.
  $test=1;
- $this_is_a_test=2;
+ $this_is_a_test=2
 }
