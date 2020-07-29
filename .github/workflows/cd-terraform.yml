@@ -2,8 +2,7 @@
 on:
   push:
     tags:
-      - release-*
-
+      - v*
 defaults:
   run:
     working-directory: ./devops
