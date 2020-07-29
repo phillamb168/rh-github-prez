@@ -11,5 +11,13 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
-      - name: 'Echo something'
-        run: terragrunt -v
+      - name: 'Execute terragrant apply-all'
+        shell: bash
+        working-directory: ./devops/prod
+        run: |
+          terragrunt init
+          terragrunt apply-all
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
