@@ -5,7 +5,6 @@ on:
       - master
     tags:
       - v*
-
 defaults:
   run:
     working-directory: ./devops
