@@ -11,7 +11,7 @@ jobs:
     name: PHP Linter
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: michaelw90/PHP-Lint@master
     - name: Add comment on failure.
       if: failure()
