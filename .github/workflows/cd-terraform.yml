@@ -1,10 +1,8 @@
 ---
 on:
   push:
-    branches:
-      - master
     tags:
-      - v*
+      - release-*
 
 defaults:
   run:
