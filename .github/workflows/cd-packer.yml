@@ -8,20 +8,20 @@ jobs:
   packer:
     runs-on: ubuntu-latest
     name: packer
-    working-directory: ./devops
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-
+        working-directory: ./devops
       # fix backwards incompatibilities in template
       - name: Fix Template
+        working-directory: ./devops
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
 
       # validate templates
       - name: Validate Template
+        working-directory: ./devops
         uses: operatehappy/packer-github-actions@master
         with:
           command: validate
@@ -30,6 +30,7 @@ jobs:
 
       # build artifact
       - name: Build Artifact
+        working-directory: ./devops
         uses: operatehappy/packer-github-actions@master
         with:
           command: build
