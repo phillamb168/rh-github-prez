@@ -4,11 +4,11 @@ on:
     branches:
       - master
 name: Packer
-working-directory: ./devops
 jobs:
   packer:
     runs-on: ubuntu-latest
     name: packer
+    working-directory: ./devops
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
