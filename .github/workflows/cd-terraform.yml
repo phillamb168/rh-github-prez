@@ -8,35 +8,22 @@ defaults:
     working-directory: ./devops
 name: Packer and Terragrunt Actions
 jobs:
-  packer:
-    runs-on: ubuntu-latest
-    name: packer
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      # validate templates
-      - name: Validate Template
-        uses: operatehappy/packer-github-actions@master
-        with:
-          command: validate
-          arguments: -syntax-only
-          target: packer.json
-
-      # build artifact
-      - name: Build Artifact
-        uses: operatehappy/packer-github-actions@master
-        with:
-          command: build
-          arguments: "-color=false -on-error=abort -aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }} -aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }} -region=us-east-1 -build_version=alpha-0.09"
-          target: packer.json
-  terragrunt:
+  deploy:
     needs: [packer]
-    name: 'Terragrunt - Prod'
+    name: 'Packer and Terragrunt - Prod'
     runs-on: [self-hosted, terragrunt]
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
+      - name: 'Packer build'
+        shell: bash
+        run: |
+          packer build \
+          -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+          -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
+          -var "region=us-east-1" \
+          -var "build_version=alpha-0.09" \
+          packer.json
       - name: 'Execute terragrant apply-all'
         shell: bash
         working-directory: ./devops/prod
