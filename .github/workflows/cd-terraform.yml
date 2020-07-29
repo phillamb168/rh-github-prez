@@ -29,6 +29,7 @@ jobs:
         run: |
           terragrunt init
           terragrunt apply-all --terragrunt-non-interactive
+          echo 'test'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
